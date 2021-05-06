@@ -11,7 +11,8 @@
     src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
     crossorigin="anonymous"></script>
-
+    <!-- // SDK MercadoPago.js V2 -->
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
     <link rel="stylesheet" href="./assets/category-landing.css" media="screen, print">
 
     <link rel="stylesheet" href="./assets/category.css" media="screen, print">
@@ -43,6 +44,31 @@
 
 <body class="as-theme-light-heroimage">
 
+
+<?php
+// SDK de Mercado Pago
+require __DIR__ .  '/vendor/autoload.php';
+// Agrega credenciales
+MercadoPago\SDK::setAccessToken('TEST-6864113784926029-082523-64405d2ff4a697e4df1bedc147234d55-167188015');
+?>
+<?php
+// Crea un objeto de preferencia
+$preference = new MercadoPago\Preference();
+
+// Crea un ítem en la preferencia
+$item = new MercadoPago\Item();
+
+// var_dump($_POST);
+
+$item->title = $_POST['title'];
+$item->quantity = $_POST['unit'];
+$item->unit_price = $_POST['price'];
+$preference->items = array($item);
+$preference->save();
+
+// var_dump($item);
+// echo "<script> alert('".$preference->id."'); </script>";
+?>
     <div class="stack">
         
         <div class="as-search-wrapper" role="main">
@@ -130,7 +156,13 @@
                                             <?php echo "$" . $_POST['unit'] ?>
                                         </h3>
                                     </div>
-                                    <button type="submit" class="mercadopago-button" formmethod="post">Pagar</button>
+                                    <button type="submit" class="mercadopago-button" formmethod="post" onclick="checkout.open()">Pagar</button>
+                                    <!-- <script
+                                        src="https://www.mercadopago.com.ar/integrations/v2/web-payment-checkout.js"
+                                        data-preference-id="<?php echo $preference->id; ?>">
+                                    </script> -->
+
+                                    <div id="container"></div>
                                 </div>
                             </div>
                         </div>
@@ -138,6 +170,32 @@
                 </div>
             </div>
         </div>
+<script type="text/javascript">
+// alert( "<?php echo $preference->id; ?>" );
+</script>
+<script>
+// Agrega credenciales de SDK
+  const mp = new MercadoPago('TEST-475bb8d5-e6b2-4798-a5d3-367310196faf', {
+        locale: 'es-AR'
+  });
+
+//   console.log(mp);
+//   console.log('' + <?php echo $preference->id; ?> + '');
+
+  var idpreferencia = <?php echo  '"' . $preference->id . '"'; ?>;
+
+  // Inicializa el checkout
+    const checkout = mp.checkout({
+      preference: {
+          id: idpreferencia
+      }
+    //   ,
+    //   render: {
+    //         container: 'container', // Indica dónde se mostrará el botón de pago
+    //         label: 'Pagar', // Cambia el texto del botón de pago (opcional)
+    //   }
+});
+</script>
         <div role="alert" class="as-loader-text ally" aria-live="assertive"></div>
         <div class="as-footnotes">
             <div class="as-footnotes-content">
