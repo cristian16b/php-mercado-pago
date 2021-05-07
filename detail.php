@@ -115,7 +115,7 @@ $preference->auto_return = "approved";
 $preference->save();
 
 // var_dump($item);
-echo $preference->id;
+
 ?>
 
 <?php
@@ -217,6 +217,7 @@ echo $preference->id;
                                     </script> -->
 
                                     <div id="container"></div>
+                                    <?php echo $preference->id; ?>
                                 </div>
                             </div>
                         </div>
