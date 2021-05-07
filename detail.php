@@ -6,7 +6,7 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="format-detection" content="telephone=no">
-
+    <script src="https://www.mercadopago.com/v2/security.js" view="home"></script>
     <script
     src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -49,26 +49,80 @@
 // SDK de Mercado Pago
 require __DIR__ .  '/vendor/autoload.php';
 // Agrega credenciales
-MercadoPago\SDK::setAccessToken('TEST-6864113784926029-082523-64405d2ff4a697e4df1bedc147234d55-167188015');
+MercadoPago\SDK::setAccessToken('APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398');
+
+MercadoPago\SDK::setIntegratorId("dev_24c65fb163bf11ea96500242ac130004");
 ?>
 <?php
 // Crea un objeto de preferencia
 $preference = new MercadoPago\Preference();
+
+// $preference->collector_id = '469485398';
 
 // Crea un ítem en la preferencia
 $item = new MercadoPago\Item();
 
 // var_dump($_POST);
 
+$item->id = 1234;
+$item->description = "Dispositivo móvil de Tienda e-commerce";
 $item->title = $_POST['title'];
-$item->quantity = $_POST['unit'];
+$item->quantity = 1;
 $item->unit_price = $_POST['price'];
+$item->external_reference = "cristian.budzicz@gmail.com";
+
 $preference->items = array($item);
+
+  // ...
+  $payer = new MercadoPago\Payer();
+  $payer->id = 471923173;
+  $payer->name = "Lalo";
+  $payer->surname = "Landa";
+  $payer->email = "test_user_63274575@testuser.com";
+//   $payer->date_created = "2018-06-02T12:58:41.425-04:00";
+  $payer->phone = array(
+    "area_code" => "11",
+    "number" => "22223333"
+  );
+  
+//   $payer->identification = array(
+//     "type" => "DNI",
+//     "number" => "12345678"
+//   );
+  
+  $payer->address = array(
+    "street_name" => "Falsa",
+    "street_number" => 123,
+    "zip_code" => "1111"
+  );
+
+  $preference->payment_methods = array(
+    "excluded_payment_methods" => array(
+      array("id" => "amex")
+    ),
+    "installments" => 6
+  );
+
+//   $preference->pa  payer($payer);
+
+$preference->back_urls = array(
+    "success" => "mp-ecommerce-php/aprobado.php",
+    "failure" => "mp-ecommerce-php/pendiente.php",
+    "pending" => "mp-ecommerce-php/rechazado.php"
+);
+$preference->auto_return = "approved";
+
 $preference->save();
 
 // var_dump($item);
 // echo "<script> alert('".$preference->id."'); </script>";
 ?>
+
+<?php
+
+  // ...
+?>
+
     <div class="stack">
         
         <div class="as-search-wrapper" role="main">
@@ -156,7 +210,7 @@ $preference->save();
                                             <?php echo "$" . $_POST['unit'] ?>
                                         </h3>
                                     </div>
-                                    <button type="submit" class="mercadopago-button" formmethod="post" onclick="checkout.open()">Pagar</button>
+                                    <button type="submit" class="mercadopago-button" formmethod="post" onclick="checkout.open()">Pagar la cuenta</button>
                                     <!-- <script
                                         src="https://www.mercadopago.com.ar/integrations/v2/web-payment-checkout.js"
                                         data-preference-id="<?php echo $preference->id; ?>">
@@ -175,7 +229,7 @@ $preference->save();
 </script>
 <script>
 // Agrega credenciales de SDK
-  const mp = new MercadoPago('TEST-475bb8d5-e6b2-4798-a5d3-367310196faf', {
+  const mp = new MercadoPago('APP_USR-7eb0138a-189f-4bec-87d1-c0504ead5626', {
         locale: 'es-AR'
   });
 
