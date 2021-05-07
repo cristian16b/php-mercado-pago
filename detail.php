@@ -106,9 +106,9 @@ $preference->items = array($item);
 //   $preference->pa  payer($payer);
 
 $preference->back_urls = array(
-    "success" => "mp-ecommerce-php/aprobado.php",
-    "failure" => "mp-ecommerce-php/pendiente.php",
-    "pending" => "mp-ecommerce-php/rechazado.php"
+    "success" => "https://cristian16b-mp-commerce-php.herokuapp.com/aprobado.php",
+    "failure" => "https://cristian16b-mp-commerce-php.herokuapp.com/pendiente.php",
+    "pending" => "https://cristian16b-mp-commerce-php.herokuapp.com/rechazado.php"
 );
 $preference->auto_return = "approved";
 
