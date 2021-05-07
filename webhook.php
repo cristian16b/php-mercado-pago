@@ -6,7 +6,7 @@ MercadoPago\SDK::setAccessToken('APP_USR-6317427424180639-042414-47e969706991d3a
 $body = @file_get_contents('php://input');
 $data = json_decode($body);
 
-file_put_contents($data->id.".json", $body);
+file_put_contents('./notificaciones/'.$data->id.".json", $body);
 
 switch($data->type) {
     case "payment":
