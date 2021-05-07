@@ -115,7 +115,7 @@ $preference->auto_return = "approved";
 $preference->save();
 
 // var_dump($item);
-// echo "<script> alert('".$preference->id."'); </script>";
+echo $preference->id;
 ?>
 
 <?php
