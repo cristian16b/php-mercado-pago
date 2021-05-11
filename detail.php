@@ -228,7 +228,7 @@ $preference->save();
                                     </script> -->
 
                                     <div id="container"></div>
-                                    <?php var_dump($preference); ?>
+                                    <?php var_dump($preference->id); ?>
                                 </div>
                             </div>
                         </div>
