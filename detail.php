@@ -108,8 +108,9 @@ $preference->items = array($item);
   );
 
 //   $preference->pa  payer($payer);
-$preference->notification_url = "https://cristian16b-mp-commerce-php.herokuapp.com/webhook.php";
-
+// $preference->notification_url = "https://cristian16b-mp-commerce-php.herokuapp.com/webhook.php";
+    
+    $preference->notification_url = "https://hookb.in/9XkBDBp1dDS600eMmdKo";
 
 $preference->back_urls = array(
     "success" => "https://cristian16b-mp-commerce-php.herokuapp.com/aprobado.php",
